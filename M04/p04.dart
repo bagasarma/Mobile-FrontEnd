@@ -11,51 +11,69 @@ class DaftarKegiatan extends StatefulWidget {
 }
 
 class _DaftarKegiatanState extends State<DaftarKegiatan> {
+  get title => null;
+
+  get myProv => Provider.of<KegiatanProvider>(context);
+
   @override
   Widget build(BuildContext context) {
-    // Mengambil instansi dari KegiatanProvider
     final kegiatanProvider = Provider.of<KegiatanProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Kegiatan'),
         backgroundColor: Colors.purple,
         foregroundColor: Colors.white,
       ),
-      body: ListView.builder(
-              itemCount: kegiatanProvider.length(),
-              itemBuilder: (context, index) {
-                Kegiatan data = kegiatanProvider.listKegiatan[index];
-                return Card(
-                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.purple,
-                      child: Text((index + 1).toString(), style: TextStyle(color: Colors.white)),
+      body: Center(
+        child: ListView.builder(
+          itemCount: kegiatanProvider.length(),
+          itemBuilder: (context, index) {
+            Kegiatan data = kegiatanProvider.listKegiatan[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.purple,
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              onLongPress: () {
+                kegiatanProvider.hapus(index);
+              },
+              title: Text(
+                data.kegiatan,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(data.keterangan),
+                  // Text("${data.mulai} - ${data.selesai}",
+                  //     style: TextStyle(fontSize: 12)),
+                ],
+              ),
+              trailing: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(8, 1, 8, 1),
+                    decoration: BoxDecoration(
+                      color: getKategoriColor(data.kategori),
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                    title: Text(data.kegiatan, style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(data.keterangan),
-                        Text("${data.mulai} - ${data.selesai}", style: TextStyle(fontSize: 12)),
-                      ],
-                    ),
-                    trailing: Container(
-                      padding: EdgeInsets.fromLTRB(8, 3, 8, 3),
-                      decoration: BoxDecoration(
-                        color: getKategoriColor(data.kategori),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        data.kategori,
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
+                    child: Text(
+                      data.kategori,
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
-                );
-              },
-            ),
+                  Text("${data.mulai}", style: TextStyle(fontSize: 9.5)),
+                  Text("${data.selesai}", style: TextStyle(fontSize: 9.5)),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -64,11 +82,14 @@ class _DaftarKegiatanState extends State<DaftarKegiatan> {
           );
         },
         backgroundColor: Colors.purple,
-        child: Icon(Icons.add, color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
-  
+
   Color getKategoriColor(String kategori) {
     switch (kategori) {
       case "Kerja":

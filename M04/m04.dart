@@ -46,6 +46,7 @@ class _M04ScreenPageState extends State<M04ScreenPage> {
         backgroundColor: Colors.purple,
       ),
       body: Container(
+        
         padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,6 +68,7 @@ class _M04ScreenPageState extends State<M04ScreenPage> {
                   child: TextField(
                     controller: _judulController,
                     decoration: InputDecoration(
+                      filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -101,6 +103,8 @@ class _M04ScreenPageState extends State<M04ScreenPage> {
                   child: TextField(
                     controller: _keteranganController,
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
@@ -204,13 +208,19 @@ class _M04ScreenPageState extends State<M04ScreenPage> {
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       value: pilihan,
                       isExpanded: true,
-                      underline: Container(), // Hapus garis bawah default
+                      underline: Container(),
                       hint: Text("  Pilih"),
                       items: [
-                        DropdownMenuItem(value: "Kerja", child: Text("  Kerja")),
-                        DropdownMenuItem(value: "Pribadi", child: Text("  Pribadi"),
+                        DropdownMenuItem(
+                            value: "Kerja", 
+                            child: Text("  Kerja")),
+                        DropdownMenuItem(
+                          value: "Pribadi",
+                          child: Text("  Pribadi"),
                         ),
-                        DropdownMenuItem(value: "Pelajaran", child: Text("  Pelajaran"),
+                        DropdownMenuItem(
+                          value: "Pelajaran",
+                          child: Text("  Pelajaran"),
                         ),
                       ],
                       onChanged: (String? value) {
@@ -240,6 +250,7 @@ class _M04ScreenPageState extends State<M04ScreenPage> {
                         });
                       },
                       style: TextButton.styleFrom(
+                        backgroundColor: Colors.white,
                         foregroundColor: Colors.purple,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
